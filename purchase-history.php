@@ -33,7 +33,7 @@ $purchases = my_wpsc_purchases();
 if ( ! empty( $purchases ) ) { ?>
 
 	<table class="logdisplay">
-			<?php my_wpsc_user_purchases( $purchases ); ?>
+			<?php cph_wpsc_user_purchases( $purchases ); ?>
 	</table>
 
 <?php } else { ?>
