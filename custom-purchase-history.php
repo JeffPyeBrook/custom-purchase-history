@@ -44,7 +44,7 @@ function my_purchase_log_cart_items() {
 			<td><?php echo my_wpsc_purchaselog_details_SKU(); ?></td>
 			<!-- SKU! -->
 			<?php
-			$item_weight = my_purchaselog_details_weight();
+			$item_weight = ph_purchaselog_details_weight();
 			$total_weight += $item_weight;
 			$item_count ++;
 			?>
@@ -55,7 +55,7 @@ function my_purchase_log_cart_items() {
 }
 
 
-function my_purchaselog_details_weight() {
+function ph_purchaselog_details_weight() {
 	global $purchlogitem;
 	$product_meta = get_product_meta( $purchlogitem->purchitem->prodid, 'product_metadata', true );
 	$weight       = 0.0;
