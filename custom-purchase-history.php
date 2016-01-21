@@ -24,13 +24,13 @@
 **
 */
 
-add_filter( 'wpsc_path_wpsc-account-purchase-history.php', 'my_custom_purchase_history', 10, 1 );
+add_filter( 'wpsc_path_wpsc-account-purchase-history.php', 'cph_custom_purchase_history', 10, 1 );
 
-function my_custom_purchase_history( $path ) {
+function cph_custom_purchase_history( $path ) {
 	return plugin_dir_path( __FILE__ ) . 'purchase-history.php';
 }
 
-function my_purchase_log_cart_items() {
+function cph_purchase_log_cart_items() {
 	$total_weight = 0;
 	$item_count   = 0;
 	while ( wpsc_have_purchaselog_details() ) : wpsc_the_purchaselog_item(); ?>
@@ -38,13 +38,13 @@ function my_purchase_log_cart_items() {
 			<td><?php echo wpsc_purchaselog_details_quantity(); ?></td>
 			<!-- QUANTITY! -->
 			<td class="itemdetails"><b><?php echo wpsc_purchaselog_details_name(); ?></b>
-				<?php// my_additional_sales_item_info(); ?>
+				<?php// cph_additional_sales_item_info(); ?>
 			</td>
 			<!-- NAME! -->
-			<td><?php echo my_wpsc_purchaselog_details_SKU(); ?></td>
+			<td><?php echo cph_wpsc_purchaselog_details_SKU(); ?></td>
 			<!-- SKU! -->
 			<?php
-			$item_weight = my_purchaselog_details_weight();
+			$item_weight = cph_purchaselog_details_weight();
 			$total_weight += $item_weight;
 			$item_count ++;
 			?>
@@ -55,7 +55,7 @@ function my_purchase_log_cart_items() {
 }
 
 
-function my_purchaselog_details_weight() {
+function cph_purchaselog_details_weight() {
 	global $purchlogitem;
 	$product_meta = get_product_meta( $purchlogitem->purchitem->prodid, 'product_metadata', true );
 	$weight       = 0.0;
@@ -80,7 +80,7 @@ function my_purchaselog_details_weight() {
  *
  * @return float $weight in '$out_unit' of shipment
  */
-function my_get_item_weight( $id = '', $out_unit = 'pound' ) {
+function cph_get_item_weight( $id = '', $out_unit = 'pound' ) {
 	global $purchlogitem;
 	$weight      = 0.0;
 	$items_count = 0;
@@ -146,11 +146,11 @@ function my_get_item_weight( $id = '', $out_unit = 'pound' ) {
 }
 
 
-function my_logo_url() {
+function cph_logo_url() {
 	return plugins_url( 'sparkle-gear-logo-vector-100.png', __FILE__ );
 }
 
-function my_purchase_log_cart_items_count() {
+function cph_purchase_log_cart_items_count() {
 
 	$count = 0;
 
@@ -162,14 +162,14 @@ function my_purchase_log_cart_items_count() {
 	return $count;
 }
 
-function my_additional_sales_item_info() {
+function cph_additional_sales_item_info() {
 	global $purchlogitem;
 	$itemid = $purchlogitem->purchitem->id;
 	do_action( 'optn8r_product_checkout_details', $itemid );
 	do_action( 'wpsc_additional_packing_item_info', $itemid );
 }
 
-function my_wpsc_purchaselog_details_SKU() {
+function cph_wpsc_purchaselog_details_SKU() {
 	global $purchlogitem;
 	$meta_value = wpsc_get_cart_item_meta( $purchlogitem->purchitem->id, 'sku', true );
 	if ( $meta_value != null ) {
@@ -189,7 +189,7 @@ function my_wpsc_purchaselog_details_SKU() {
 }
 
 
-function my_wpsc_user_purchases( $purchase_ids ) {
+function cph_wpsc_user_purchases( $purchase_ids ) {
 	global $wpdb;
 	global $purchlogitem;
 
@@ -205,7 +205,7 @@ function my_wpsc_user_purchases( $purchase_ids ) {
 		$i++;
 		$purchlogitem = new wpsc_purchaselogs_items( $purchase_id );
 
-		//my_purchase_log_cart_items();
+		//cph_purchase_log_cart_items();
 
 		if ( ($i % 2) != 0 ) {
 			$alternate = 'class="header-row alt"';
